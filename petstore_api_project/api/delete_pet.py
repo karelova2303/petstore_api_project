@@ -5,7 +5,7 @@ from petstore_api_project.api.api_requests import base_api
 
 
 def delete_pet_200_ok(api_url, headers):
-    new_pet = add_pet_200_ok(api_url, headers, 'Girafe')
+    new_pet = add_pet_200_ok(api_url, headers, 'Monkey')
     id_pet = str(new_pet.json()['id'])
 
     response = base_api("DELETE", api_url=api_url, endpoint=f'{ENDPOINT}/{id_pet}')
@@ -13,7 +13,7 @@ def delete_pet_200_ok(api_url, headers):
 
 
 def delete_pet_404_not_found(api_url, headers):
-    new_pet = add_pet_200_ok(api_url, headers, 'Girafe')
+    new_pet = add_pet_200_ok(api_url, headers, 'Monkey')
     id_pet = str(new_pet.json()['id'])
 
     for _ in range(2):
