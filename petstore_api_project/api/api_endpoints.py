@@ -1,0 +1,1 @@
+ENDPOINT = '/v2/pet'
