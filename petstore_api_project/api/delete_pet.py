@@ -13,10 +13,8 @@ def delete_pet_200_ok(api_url, headers):
 
 
 def delete_pet_404_not_found(api_url, headers):
-    new_pet = add_pet_200_ok(api_url, headers, 'Monkey')
-    id_pet = str(new_pet.json()['id'])
+    id_pet = '1111111'
 
-    for _ in range(3):
-        response = base_api("DELETE", api_url=api_url, endpoint=f'{ENDPOINT}/{id_pet}')
+    response = base_api("DELETE", api_url=api_url, endpoint=f'{ENDPOINT}/{id_pet}')
 
     return response
