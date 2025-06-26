@@ -24,8 +24,7 @@ class TestFindPet:
         with allure.step('Проверка схемы для валидации API запросов'):
             validate(response.json(), get_pet_schemas)
 
-
-    @allure.title('Поиск питомца по несуществующему id - "404 Not Found')
+    @allure.title('Поиск питомца по несуществующему id - "404 Not Found"')
     def test_find_pet_by_id_404(self, api_url):
         with allure.step('Отправка запроса на поиск питомца'):
             response = find_pet_by_id_404_not_found(api_url)
@@ -34,8 +33,6 @@ class TestFindPet:
             assert response.status_code == 404
         with allure.step('Проверка, что атрибут "message" содержит id питомца'):
             assert response.json()['message'] == "Pet not found"
-
-
 
     @pytest.mark.parametrize('status', ['available', 'pending', 'sold'])
     @allure.title('Успешный поиск питомца по статусу - "200 OK"')
