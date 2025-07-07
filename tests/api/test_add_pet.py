@@ -1,10 +1,9 @@
 import allure
+import pytest
 from jsonschema.validators import validate
 
-from petstore_api_project.api.add_pet import add_pet_200_ok, add_pet_405_method_not_allowed
+from petstore_api_project.api.add_pet import add_pet, pet_add_unsuccess
 from petstore_api_project.schemas import post_pet_schemas
-
-pet_name = 'Dandy'
 
 
 @allure.tag('api')
@@ -12,10 +11,11 @@ pet_name = 'Dandy'
 @allure.suite('Добавление питомца в магазин')
 class TestAddPet:
 
-    @allure.title('Успешное добавление - "200 OK"')
-    def test_add_pet_200(self, api_url, headers):
+    @pytest.mark.parametrize('pet_name', ['Dandy'])
+    @allure.title('Успешное добавление')
+    def test_add_pet_success(self, api_url, headers, pet_name):
         with allure.step('Отправка запроса на добавление питомца'):
-            response = add_pet_200_ok(api_url, headers, pet_name)
+            response = add_pet(api_url, headers, pet_name)
 
         with allure.step('Проверка, что возвращается статус код 200'):
             assert response.status_code == 200
@@ -24,10 +24,12 @@ class TestAddPet:
         with allure.step('Проверка схемы для валидации API запросов'):
             validate(response.json(), post_pet_schemas)
 
-    @allure.title('Неуспешное добавление - "405 Method Not Allowed"')
-    def test_add_pet_405(self, headers, api_url):
+
+    @pytest.mark.parametrize('pet_name', ['Dandy'])
+    @allure.title('Неуспешное добавление')
+    def test_add_pet_unsuccess(self, headers, api_url, pet_name):
         with allure.step('Отправка запроса на добавление питомца'):
-            response = add_pet_405_method_not_allowed(api_url, headers, pet_name)
+            response = pet_add_unsuccess(api_url, headers, pet_name)
 
         with allure.step('Проверка, что возвращается статус код 405'):
             assert response.status_code == 405
